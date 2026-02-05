@@ -4,12 +4,14 @@ namespace ZenMLRace.Core.Entities;
 
 public class Horse
 {
-    public string Id { get; set; } = default!; // netkeibaの馬ID
-    public string Name { get; set; } = default!;
-    public DateTime? BirthDate { get; set; }
+    public required string Id { get; set; }
+    public required string Name { get; set; }
+    public required int Age { get; set; }
     public HorseSex Sex { get; set; }
     public HorseCoatColor CoatColor { get; set; }
+    public required Horse Father { get; set; }
+    public required Horse Mother { get; set; }
 
-    // ナビゲーションプロパティ
+    // Navigation Property
     public ICollection<RaceEntry> RaceEntries { get; set; } = [];
 }

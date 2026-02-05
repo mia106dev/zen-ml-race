@@ -2,23 +2,47 @@ namespace ZenMLRace.Core.Entities;
 
 public class RaceEntry
 {
-    public string RaceId { get; set; } = default!;
-    public Race Race { get; set; } = default!;
+    public required string RaceId { get; set; }
+    public required Race Race { get; set; }
 
-    public string HorseId { get; set; } = default!;
-    public Horse Horse { get; set; } = default!;
+    public required string HorseId { get; set; }
+    public required Horse Horse { get; set; }
 
-    public string JockeyId { get; set; } = default!;
-    public Jockey Jockey { get; set; } = default!;
+    public required string JockeyId { get; set; }
+    public required Jockey Jockey { get; set; }
 
-    public int BracketNumber { get; set; } // 枠番
-    public int HorseNumber { get; set; } // 馬番
-
-    public double BurdenWeight { get; set; } // 斤量
+    /// <summary>
+    /// 枠番
+    /// </summary>
+    public int BracketNumber { get; set; }
+    /// <summary>
+    /// 馬番
+    /// </summary>
+    public int HorseNumber { get; set; }
+    /// <summary>
+    /// 斤量
+    /// </summary>
+    public double BurdenWeight { get; set; }
+    /// <summary>
+    /// 馬体重
+    /// </summary>
+    public double HorseWeight { get; set; }
 
     // 以下はレース確定後、またはオッズ発表後に判明するデータ (null許容)
-    public int? FinishOrder { get; set; } // 着順
-    public TimeSpan? FinishTime { get; set; } // タイム
-    public double? Odds { get; set; } // 単勝オッズ
-    public int? Popularity { get; set; } // 人気
+    /// <summary>
+    /// 着順
+    /// </summary>
+    public int? FinishOrder { get; set; }
+    /// <summary>
+    /// タイム
+    /// </summary>
+    public TimeSpan? FinishTime { get; set; }
+    /// <summary>
+    /// 単勝オッズ
+    /// </summary>
+    public double? Odds { get; set; }
+    /// <summary>
+    /// 人気
+    /// </summary>
+    public int? Popularity { get; set; }
 }

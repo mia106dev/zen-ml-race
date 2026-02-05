@@ -2,9 +2,9 @@ namespace ZenMLRace.Core.Entities;
 
 public class Jockey
 {
-    public string Id { get; set; } = default!; // netkeibaの騎手ID
-    public string Name { get; set; } = default!;
+    public required string Id { get; set; }
+    public required string Name { get; set; }
 
-    // ナビゲーションプロパティ
+    // Navigation Property
     public ICollection<RaceEntry> RaceEntries { get; set; } = [];
 }

@@ -14,6 +14,7 @@
     <ProjectReference Include="..\ZenMLRace.Core\ZenMLRace.Core.csproj" />
     <ProjectReference Include="..\ZenMLRace.Infrastructure\ZenMLRace.Infrastructure.csproj" />
     <ProjectReference Include="..\ZenMLRace.ML\ZenMLRace.ML.csproj" />
+    <ProjectReference Include="..\ZenMLRace.Worker\ZenMLRace.Worker.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
 # Zen - Horse Race Prediction By ML.NET - 競馬予測システム開発プロジェクト
-#ai-generates
 
 ## 1. プロジェクト概要
 機械学習 (ML.NET) を用いて競馬の結果を予測するシステム。

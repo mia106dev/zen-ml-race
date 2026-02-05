@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-ZenMLRace.Worker-cb1ad7b2-368b-4a25-9fc3-aa9f5502bec6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZenMLRace.Core\ZenMLRace.Core.csproj" />
+    <ProjectReference Include="..\ZenMLRace.Infrastructure\ZenMLRace.Infrastructure.csproj" />
+    <ProjectReference Include="..\ZenMLRace.ML\ZenMLRace.ML.csproj" />
+  </ItemGroup>
+</Project>

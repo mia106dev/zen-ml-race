@@ -17,14 +17,15 @@ public sealed partial class JraHtmlRaceNormalizer : IHtmlRaceNormalizer
         var raceCardDocument = parser.ParseDocument(source.RaceCardHtml);
         var dataDocument = parser.ParseDocument(source.DataHtml);
 
-        var raceName = ReadRaceName(raceCardDocument) ?? "Unknown Race";
+        var raceTable = FindRaceTable(raceCardDocument);
+        var raceCard = ParseRaceCard(raceTable);
+        var raceName = raceCard.Race.Name;
         var raceCardMarkdown = ConvertToMarkdown(raceCardDocument);
         var dataMarkdown = ConvertToMarkdown(dataDocument);
-
-        var horses = ExtractHorseProfiles(raceCardDocument);
+        var horses = MapHorseProfiles(raceCard.Entries);
         var insights = ExtractInsights(dataMarkdown);
 
-        return new NormalizedRaceData(raceName, horses, insights, raceCardMarkdown, dataMarkdown);
+        return new NormalizedRaceData(raceName, horses, insights, raceCardMarkdown, dataMarkdown, raceCard);
     }
 
     private static void ValidateInputHtml(string html, string fieldName)
@@ -40,15 +41,135 @@ public sealed partial class JraHtmlRaceNormalizer : IHtmlRaceNormalizer
         }
     }
 
-    private static string? ReadRaceName(IDocument document)
+    private static IElement FindRaceTable(IDocument document)
     {
-        var h1 = document.QuerySelector("h1");
-        if (!string.IsNullOrWhiteSpace(h1?.TextContent))
+        return document.QuerySelector("#main_contents #race_syutsuba #syutsuba table.basic")
+            ?? document.QuerySelector("#syutsuba table.basic")
+            ?? document.QuerySelector("table.basic")
+            ?? throw new InvalidOperationException("出馬表テーブル(table.basic)を検出できませんでした。HTML構造が変更されている可能性があります。");
+    }
+
+    private static RaceCard ParseRaceCard(IElement raceTable)
+    {
+        var raceInfo = ParseRaceInfo(raceTable);
+        var entries = ParseRaceEntries(raceTable);
+        return new RaceCard(raceInfo, entries);
+    }
+
+    private static RaceCardRaceInfo ParseRaceInfo(IElement raceTable)
+    {
+        var raceName = NormalizeText(raceTable.QuerySelector("caption .race_title .race_name")?.TextContent);
+        if (string.IsNullOrWhiteSpace(raceName))
         {
-            return h1.TextContent.Trim();
+            raceName = "Unknown Race";
         }
 
-        return document.Title?.Trim();
+        var date = NormalizeText(raceTable.QuerySelector("caption .date_line .cell.date")?.TextContent);
+        var course = NormalizeText(raceTable.QuerySelector("caption .type .cell.course")?.TextContent);
+        var distance = NormalizeText(raceTable.QuerySelector("caption .type .cell.course .cap")?.ParentElement?.TextContent);
+        var eligibility = NormalizeText(raceTable.QuerySelector("caption .type .cell.category")?.TextContent);
+        var classification = NormalizeText(raceTable.QuerySelector("caption .type .cell.class")?.TextContent);
+        var rule = NormalizeText(raceTable.QuerySelector("caption .type .cell.rule")?.TextContent);
+        var weightRule = NormalizeText(raceTable.QuerySelector("caption .type .cell.weight")?.TextContent);
+
+        return new RaceCardRaceInfo(
+            raceName,
+            NullIfEmpty(date),
+            NullIfEmpty(course),
+            NullIfEmpty(distance),
+            NullIfEmpty(eligibility),
+            NullIfEmpty(classification),
+            NullIfEmpty(rule),
+            NullIfEmpty(weightRule));
+    }
+
+    private static IReadOnlyList<RaceCardEntry> ParseRaceEntries(IElement raceTable)
+    {
+        var rows = raceTable.QuerySelectorAll("tbody > tr");
+        var entries = new List<RaceCardEntry>();
+        foreach (var row in rows)
+        {
+            var frameCell = row.QuerySelector("td.waku");
+            var numberCell = row.QuerySelector("td.num");
+            var horseCell = row.QuerySelector("td.horse");
+            var jockeyCell = row.QuerySelector("td.jockey");
+            if (frameCell is null || numberCell is null || horseCell is null || jockeyCell is null)
+            {
+                continue;
+            }
+
+            var horseName = NormalizeText(horseCell.QuerySelector(".name_line .name")?.TextContent);
+            if (string.IsNullOrWhiteSpace(horseName))
+            {
+                continue;
+            }
+
+            var ageText = NormalizeText(jockeyCell.QuerySelector("p.age")?.TextContent);
+            var (sex, age, coatColor) = ParseSexAge(ageText);
+            var assignedWeight = ParseWeightKg(NormalizeText(jockeyCell.QuerySelector("p.weight")?.TextContent));
+            var jockey = NormalizeText(jockeyCell.QuerySelector("p.jockey")?.TextContent);
+
+            entries.Add(new RaceCardEntry(
+                TryParseFrameNumber(frameCell) ?? 0,
+                TryParseHorseNumber(numberCell) ?? 0,
+                horseName,
+                sex,
+                age,
+                coatColor,
+                assignedWeight,
+                NullIfEmpty(jockey),
+                ParsePastRuns(row)));
+        }
+
+        return entries;
+    }
+
+    private static IReadOnlyList<RaceCardPastRun> ParsePastRuns(IElement row)
+    {
+        var runs = new List<RaceCardPastRun>(4);
+        for (var i = 1; i <= 4; i++)
+        {
+            var pastCell = row.QuerySelector($"td.past.p{i}");
+            if (pastCell is null)
+            {
+                continue;
+            }
+
+            var raceName = NullIfEmpty(NormalizeText(pastCell.QuerySelector(".race_line .name")?.TextContent));
+            if (raceName is null)
+            {
+                continue;
+            }
+
+            runs.Add(new RaceCardPastRun(
+                i,
+                NullIfEmpty(NormalizeText(pastCell.QuerySelector(".date_line .date")?.TextContent)),
+                NullIfEmpty(NormalizeText(pastCell.QuerySelector(".date_line .rc")?.TextContent)),
+                raceName,
+                TryParseFinish(NormalizeText(pastCell.QuerySelector(".place_line .place")?.TextContent)),
+                TryParsePopularity(NormalizeText(pastCell.QuerySelector(".place_line .num .pop")?.TextContent))));
+        }
+
+        return runs;
+    }
+
+    private static IReadOnlyList<HorseProfile> MapHorseProfiles(IReadOnlyList<RaceCardEntry> entries)
+    {
+        var horses = new List<HorseProfile>(entries.Count);
+        foreach (var entry in entries)
+        {
+            var firstPast = entry.PastRuns.OrderBy(static x => x.Index).FirstOrDefault();
+            horses.Add(new HorseProfile(
+                entry.FrameNumber,
+                entry.HorseNumber,
+                entry.HorseName,
+                entry.Age,
+                firstPast?.RaceName,
+                firstPast?.FinishPosition ?? 0,
+                firstPast?.Popularity ?? 0));
+        }
+
+        return horses;
     }
 
     private static string ConvertToMarkdown(IDocument document)
@@ -147,87 +268,36 @@ public sealed partial class JraHtmlRaceNormalizer : IHtmlRaceNormalizer
         sb.AppendLine();
     }
 
-    private static IReadOnlyList<HorseProfile> ExtractHorseProfiles(IDocument raceCardDocument)
+    private static (string? Sex, int? Age, string? CoatColor) ParseSexAge(string? ageText)
     {
-        var rows = raceCardDocument.QuerySelectorAll("tr");
-        var horses = new List<HorseProfile>();
-        var fallbackHorseNumber = 1;
-
-        foreach (var row in rows)
+        if (string.IsNullOrWhiteSpace(ageText))
         {
-            var frameCell = row.QuerySelector("td.waku");
-            var numberCell = row.QuerySelector("td.num");
-            var horseCell = row.QuerySelector("td.horse");
-
-            if (frameCell is null || numberCell is null || horseCell is null)
-            {
-                continue;
-            }
-
-            var hasFrameNumber = TryExtractFrameNumber(frameCell, out var frameNumber);
-            var hasHorseNumber = TryExtractHorseNumber(numberCell, out var horseNumber);
-
-            var horseText = NormalizeText(horseCell.TextContent);
-            var name = ExtractHorseName(horseText);
-            if (string.Equals(name, "Unknown", StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            if (!hasHorseNumber)
-            {
-                horseNumber = fallbackHorseNumber;
-            }
-
-            if (!hasFrameNumber)
-            {
-                frameNumber = 0;
-            }
-
-            fallbackHorseNumber++;
-            var age = ExtractAge(horseText);
-
-            var pastCells = row.QuerySelectorAll("td.past");
-            var raceSummary = NormalizeText(string.Join(" ", pastCells.Select(static x => x.TextContent)));
-
-            horses.Add(new HorseProfile(
-                frameNumber,
-                horseNumber,
-                name,
-                age,
-                ExtractLastRaceCategory(raceSummary),
-                ExtractFirstNumber(raceSummary, "着"),
-                ExtractFirstNumber(raceSummary, "番人気")));
+            return (null, null, null);
         }
 
-        return horses;
+        var match = SexAgeColorRegex().Match(ageText);
+        if (!match.Success)
+        {
+            return (null, null, NullIfEmpty(ageText));
+        }
+
+        var age = TryParseFirstInt(match.Groups["age"].Value);
+        return (
+            NullIfEmpty(match.Groups["sex"].Value),
+            age,
+            NullIfEmpty(match.Groups["color"].Value));
     }
 
-    private static bool TryExtractFrameNumber(IElement frameCell, out int frameNumber)
+    private static int? TryParseFrameNumber(IElement frameCell)
     {
-        frameNumber = 0;
-
         var alt = frameCell.QuerySelector("img")?.GetAttribute("alt") ?? string.Empty;
-        var frameMatch = FrameNumberRegex().Match(alt);
-        if (!frameMatch.Success)
-        {
-            return false;
-        }
-
-        return int.TryParse(frameMatch.Groups[1].Value, out frameNumber);
+        return TryParseFirstInt(alt);
     }
 
-    private static bool TryExtractHorseNumber(IElement numberCell, out int horseNumber)
+    private static int? TryParseHorseNumber(IElement numberCell)
     {
-        horseNumber = 0;
         var numText = NormalizeText(numberCell.TextContent);
-        var numMatch = HorseNumberRegex().Match(numText);
-        if (!numMatch.Success)
-        {
-            return false;
-        }
-
-        return int.TryParse(numMatch.Groups[1].Value, out horseNumber);
+        return TryParseFirstInt(numText);
     }
 
     private static IReadOnlyList<DataInsight> ExtractInsights(string dataMarkdown)
@@ -255,54 +325,14 @@ public sealed partial class JraHtmlRaceNormalizer : IHtmlRaceNormalizer
         insights.Add(new DataInsight(key, keyword, weightHint));
     }
 
-    private static string ExtractHorseName(string text)
+    private static int? TryParseFirstInt(string? text)
     {
-        var withoutStats = Regex.Replace(text, @"\([\d\.\-]+\)", string.Empty);
-        var horseName = NormalizeText(withoutStats)
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .FirstOrDefault(static token => !token.Contains('/') && token.Length >= 2);
-        return string.IsNullOrWhiteSpace(horseName) ? "Unknown" : horseName;
-    }
-
-    private static int? ExtractAge(string text)
-    {
-        var match = AgeRegex().Match(text);
-        if (!match.Success)
+        if (string.IsNullOrWhiteSpace(text))
         {
             return null;
         }
 
-        return int.TryParse(match.Groups[1].Value, out var age) ? age : null;
-    }
-
-    private static string? ExtractLastRaceCategory(string text)
-    {
-        if (text.Contains("香港", StringComparison.Ordinal) || text.Contains("海外", StringComparison.Ordinal))
-        {
-            return "Overseas";
-        }
-
-        if (text.Contains("シルクロード", StringComparison.Ordinal))
-        {
-            return "SilkRoad";
-        }
-
-        if (text.Contains("オーシャン", StringComparison.Ordinal))
-        {
-            return "Ocean";
-        }
-
-        if (text.Contains("阪急杯", StringComparison.Ordinal))
-        {
-            return "Hankyu";
-        }
-
-        return null;
-    }
-
-    private static int? ExtractFirstNumber(string text, string suffix)
-    {
-        var match = Regex.Match(text, $@"(\d+){Regex.Escape(suffix)}");
+        var match = NumberRegex().Match(text);
         if (!match.Success)
         {
             return null;
@@ -311,18 +341,82 @@ public sealed partial class JraHtmlRaceNormalizer : IHtmlRaceNormalizer
         return int.TryParse(match.Groups[1].Value, out var value) ? value : null;
     }
 
-    private static string NormalizeText(string text)
+    private static int? TryParseFinish(string? text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return null;
+        }
+
+        var match = FinishRegex().Match(text);
+        if (!match.Success)
+        {
+            return null;
+        }
+
+        return int.TryParse(match.Groups[1].Value, out var value) ? value : null;
+    }
+
+    private static int? TryParsePopularity(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return null;
+        }
+
+        var match = PopularityRegex().Match(text);
+        if (!match.Success)
+        {
+            return null;
+        }
+
+        return int.TryParse(match.Groups[1].Value, out var value) ? value : null;
+    }
+
+    private static double? ParseWeightKg(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return null;
+        }
+
+        var match = WeightRegex().Match(text);
+        if (!match.Success)
+        {
+            return null;
+        }
+
+        return double.TryParse(match.Groups[1].Value, out var value) ? value : null;
+    }
+
+    private static string? NullIfEmpty(string? text)
+    {
+        return string.IsNullOrWhiteSpace(text) ? null : text;
+    }
+
+    private static string NormalizeText(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return string.Empty;
+        }
+
         var normalized = text.Replace('\n', ' ').Replace('\r', ' ').Trim();
         return Regex.Replace(normalized, @"\s+", " ");
     }
 
-    [GeneratedRegex(@"[牡牝セ](\d+)")]
-    private static partial Regex AgeRegex();
-
     [GeneratedRegex(@"(\d+)")]
-    private static partial Regex FrameNumberRegex();
+    private static partial Regex NumberRegex();
 
-    [GeneratedRegex(@"^(\d+)")]
-    private static partial Regex HorseNumberRegex();
+    [GeneratedRegex(@"(\d+)着")]
+    private static partial Regex FinishRegex();
+
+    [GeneratedRegex(@"(\d+)番人気")]
+    private static partial Regex PopularityRegex();
+
+    [GeneratedRegex(@"([0-9]+(?:\.[0-9]+)?)\s*kg")]
+    private static partial Regex WeightRegex();
+
+    [GeneratedRegex(@"^(?<sex>[牡牝セ])(?<age>\d+)(?:/(?<color>.+))?$")]
+    private static partial Regex SexAgeColorRegex();
 }

@@ -1,0 +1,51 @@
+{
+  "profileVersion": "1.0",
+  "targetYear": 2026,
+  "raceKey": "takamatsu",
+  "weights": {
+    "popularityWeight": 0.75,
+    "ageWeight": null,
+    "frameWeight": 0.95,
+    "previousRaceWeight": 1.35
+  },
+  "scoring": {
+    "frameScores": [
+      { "minInclusive": 4, "maxInclusive": 7, "score": 0.35 },
+      { "minInclusive": 8, "maxInclusive": 8, "score": 0.10 },
+      { "minInclusive": 1, "maxInclusive": 2, "score": -0.10 }
+    ],
+    "ageScores": [
+      { "minInclusive": 4, "maxInclusive": 6, "score": 0.60 },
+      { "minInclusive": 7, "maxInclusive": 7, "score": -0.45 },
+      { "minInclusive": 8, "maxInclusive": null, "score": -0.70 }
+    ],
+    "preferredRaceNameScores": {
+      "香港スプリン": 1.00,
+      "香港スプリント": 1.00,
+      "シルクロード": 0.95,
+      "オーシャンS": 0.45,
+      "阪神カップ": 0.35,
+      "スプリンター": 0.60,
+      "スプリンターズS": 0.60
+    },
+    "lastFinishScores": [
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.10 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.95 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.70 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.45 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": 0.20 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.70 },
+      { "minInclusive": null, "maxInclusive": null, "score": -0.15 }
+    ],
+    "lastPopularityScores": [
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.80 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.65 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.50 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.25 },
+      { "minInclusive": 6, "maxInclusive": 8, "score": 0.14 },
+      { "minInclusive": 9, "maxInclusive": 12, "score": 0.04 },
+      { "minInclusive": 13, "maxInclusive": null, "score": -0.12 },
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ]
+  }
+}

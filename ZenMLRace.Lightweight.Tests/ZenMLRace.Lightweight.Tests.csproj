@@ -22,4 +22,10 @@
     <ProjectReference Include="..\ZenMLRace.Lightweight\ZenMLRace.Lightweight.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\**\*.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

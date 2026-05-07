@@ -27,7 +27,7 @@ public sealed class DeterministicInsightNarrator : IInsightNarrator
             sb.AppendLine($"3位候補: {top[2].Name}（{top[2].Score:F2}）");
         }
 
-        sb.AppendLine("上位評価は、年齢レンジ・前走カテゴリ・直近着順の合成スコアを根拠としています。");
+        sb.AppendLine("上位評価は、年齢レンジ・前走レース名・直近着順・前走人気の合成スコアを根拠としています。");
         return sb.ToString().TrimEnd();
     }
 }

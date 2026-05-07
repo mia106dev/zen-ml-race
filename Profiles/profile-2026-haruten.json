@@ -1,0 +1,51 @@
+{
+  "profileVersion": "1.0",
+  "targetYear": 2026,
+  "raceKey": "haruten",
+  "weights": {
+    "popularityWeight": 1.30,
+    "ageWeight": 1.10,
+    "frameWeight": 0.80,
+    "previousRaceWeight": 1.35
+  },
+  "scoring": {
+    "frameScores": [
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ],
+    "ageScores": [
+      { "minInclusive": 4, "maxInclusive": 4, "score": 0.85 },
+      { "minInclusive": 5, "maxInclusive": 5, "score": 0.65 },
+      { "minInclusive": 6, "maxInclusive": 6, "score": 0.15 },
+      { "minInclusive": 7, "maxInclusive": null, "score": -0.60 }
+    ],
+    "preferredRaceNameScores": {
+      "阪神大賞典": 0.95,
+      "日経賞": 0.75,
+      "有馬記念": 0.70,
+      "菊花賞": 0.90,
+      "天皇賞春": 1.00,
+      "天皇賞(春)": 1.00,
+      "天皇賞・春": 1.00,
+      "京都記念": 0.35,
+      "ジャパンC": 0.30
+    },
+    "lastFinishScores": [
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.00 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.70 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.40 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": 0.05 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.70 },
+      { "minInclusive": null, "maxInclusive": null, "score": -0.15 }
+    ],
+    "lastPopularityScores": [
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.00 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.60 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.35 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": -0.20 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.50 },
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ]
+  }
+}

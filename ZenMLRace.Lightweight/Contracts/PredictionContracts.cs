@@ -12,9 +12,9 @@ public sealed record HorseProfile(
     int HorseNumber,
     string Name,
     int? Age,
-    string? LastRaceCategory,
-    int? LastRaceFinishPosition,
-    int? LastRacePopularity);
+    string? LastRaceName,
+    int LastRaceFinishPosition,
+    int LastRacePopularity);
 
 public sealed record DataInsight(
     string Key,
@@ -26,7 +26,41 @@ public sealed record NormalizedRaceData(
     IReadOnlyList<HorseProfile> Horses,
     IReadOnlyList<DataInsight> Insights,
     string RaceCardMarkdown,
-    string DataMarkdown);
+    string DataMarkdown,
+    RaceCard? RaceCard = null);
+
+public sealed record RaceCard(
+    RaceCardRaceInfo Race,
+    IReadOnlyList<RaceCardEntry> Entries);
+
+public sealed record RaceCardRaceInfo(
+    string Name,
+    string? Date,
+    string? Course,
+    string? Distance,
+    string? Eligibility,
+    string? Classification,
+    string? Rule,
+    string? WeightRule);
+
+public sealed record RaceCardEntry(
+    int FrameNumber,
+    int HorseNumber,
+    string HorseName,
+    string? Sex,
+    int? Age,
+    string? CoatColor,
+    double? AssignedWeightKg,
+    string? Jockey,
+    IReadOnlyList<RaceCardPastRun> PastRuns);
+
+public sealed record RaceCardPastRun(
+    int Index,
+    string? Date,
+    string? Venue,
+    string? RaceName,
+    int? FinishPosition,
+    int? Popularity);
 
 public sealed record PredictionRequest(
     RaceSourceDocuments Source,

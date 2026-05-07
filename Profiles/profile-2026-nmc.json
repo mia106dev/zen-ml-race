@@ -1,0 +1,56 @@
+{
+  "profileVersion": "1.0",
+  "targetYear": 2026,
+  "raceKey": "nmc",
+  "weights": {
+    "popularityWeight": 0.95,
+    "ageWeight": null,
+    "frameWeight": 1.20,
+    "previousRaceWeight": 1.35
+  },
+  "scoring": {
+    "frameScores": [
+      { "minInclusive": 6, "maxInclusive": 6, "score": 0.75 },
+      { "minInclusive": 8, "maxInclusive": 8, "score": 0.70 },
+      { "minInclusive": 5, "maxInclusive": 5, "score": 0.35 },
+      { "minInclusive": 7, "maxInclusive": 7, "score": 0.15 },
+      { "minInclusive": 2, "maxInclusive": 3, "score": -0.10 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": -0.30 },
+      { "minInclusive": 4, "maxInclusive": 4, "score": -0.35 }
+    ],
+    "ageScores": [
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.00 }
+    ],
+    "preferredRaceNameScores": {
+      "皐月賞": 1.00,
+      "桜花賞": 0.95,
+      "ニュージーランドT": 0.55,
+      "ＮＺＴ": 0.55,
+      "チャーチルダウンズC": 0.50,
+      "アーリントンC": 0.50,
+      "ファルコンS": 0.45,
+      "毎日杯": 0.40,
+      "アネモネS": 0.35,
+      "弥生賞": 0.55
+    },
+    "lastFinishScores": [
+      { "minInclusive": 2, "maxInclusive": 2, "score": 1.00 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.90 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.72 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.15 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": 0.10 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.45 },
+      { "minInclusive": null, "maxInclusive": null, "score": -0.10 }
+    ],
+    "lastPopularityScores": [
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.45 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.30 },
+      { "minInclusive": 4, "maxInclusive": 4, "score": 0.10 },
+      { "minInclusive": 5, "maxInclusive": 5, "score": -0.10 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": 0.12 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.12 },
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ]
+  }
+}

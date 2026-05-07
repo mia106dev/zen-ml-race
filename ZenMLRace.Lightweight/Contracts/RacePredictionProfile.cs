@@ -21,6 +21,6 @@ public sealed record NumericBandScore(
 public sealed record ScoringProfile(
     IReadOnlyList<NumericBandScore> FrameScores,
     IReadOnlyList<NumericBandScore> AgeScores,
-    IReadOnlyDictionary<string, double> LastRaceCategoryScores,
+    IReadOnlyDictionary<string, double> PreferredRaceNameScores,
     IReadOnlyList<NumericBandScore> LastFinishScores,
     IReadOnlyList<NumericBandScore> LastPopularityScores);

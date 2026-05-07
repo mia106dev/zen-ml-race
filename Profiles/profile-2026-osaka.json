@@ -1,0 +1,53 @@
+{
+  "profileVersion": "1.0",
+  "targetYear": 2026,
+  "raceKey": "osaka",
+  "weights": {
+    "popularityWeight": 1.30,
+    "ageWeight": 1.10,
+    "frameWeight": 0.90,
+    "previousRaceWeight": 1.25
+  },
+  "scoring": {
+    "frameScores": [
+      { "minInclusive": 1, "maxInclusive": 2, "score": -0.35 },
+      { "minInclusive": 3, "maxInclusive": 8, "score": 0.10 }
+    ],
+    "ageScores": [
+      { "minInclusive": 5, "maxInclusive": 5, "score": 0.90 },
+      { "minInclusive": 4, "maxInclusive": 4, "score": 0.60 },
+      { "minInclusive": 6, "maxInclusive": 6, "score": -0.40 },
+      { "minInclusive": 7, "maxInclusive": null, "score": -0.60 }
+    ],
+    "preferredRaceNameScores": {
+      "金鯱賞": 0.90,
+      "中山記念": 0.75,
+      "チャレンジC": 0.60,
+      "有馬記念": 0.70,
+      "有馬": 0.70,
+      "香港C": 0.65,
+      "香港Ｃ": 0.65,
+      "ドバイターフ": 0.75,
+      "大阪杯": 1.00
+    },
+    "lastFinishScores": [
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.00 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.70 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.45 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": 0.10 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.60 },
+      { "minInclusive": null, "maxInclusive": null, "score": -0.15 }
+    ],
+    "lastPopularityScores": [
+      { "minInclusive": 2, "maxInclusive": 2, "score": 1.00 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.90 },
+      { "minInclusive": 4, "maxInclusive": 4, "score": 0.70 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.55 },
+      { "minInclusive": 5, "maxInclusive": 5, "score": 0.15 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": -0.15 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.45 },
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ]
+  }
+}

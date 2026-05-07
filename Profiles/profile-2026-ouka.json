@@ -1,0 +1,53 @@
+{
+  "profileVersion": "1.0",
+  "targetYear": 2026,
+  "raceKey": "ouka",
+  "weights": {
+    "popularityWeight": 1.35,
+    "ageWeight": null,
+    "frameWeight": 0.75,
+    "previousRaceWeight": 1.30
+  },
+  "scoring": {
+    "frameScores": [
+      { "minInclusive": 2, "maxInclusive": 7, "score": 0.10 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": -0.10 },
+      { "minInclusive": 8, "maxInclusive": 8, "score": -0.10 }
+    ],
+    "ageScores": [
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.00 }
+    ],
+    "preferredRaceNameScores": {
+      "阪神JF": 1.00,
+      "阪神ジュベナイルフィリーズ": 1.00,
+      "チューリップ賞": 0.70,
+      "クイーンC": 0.40,
+      "エルフィンS": 0.55,
+      "シンザン記念": 0.55,
+      "朝日杯FS": 0.50,
+      "フィリーズレビュー": 0.10,
+      "アネモネS": -0.35,
+      "フェアリーS": 0.20,
+      "きさらぎ賞": 0.30
+    },
+    "lastFinishScores": [
+      { "minInclusive": 2, "maxInclusive": 2, "score": 1.00 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.95 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.90 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": -0.15 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": -0.45 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.70 },
+      { "minInclusive": null, "maxInclusive": null, "score": -0.10 }
+    ],
+    "lastPopularityScores": [
+      { "minInclusive": 2, "maxInclusive": 2, "score": 1.00 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.90 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.85 },
+      { "minInclusive": 4, "maxInclusive": 4, "score": 0.10 },
+      { "minInclusive": 5, "maxInclusive": 5, "score": 0.00 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": -0.30 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.55 },
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ]
+  }
+}

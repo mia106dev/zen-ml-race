@@ -1,0 +1,52 @@
+{
+  "profileVersion": "1.0",
+  "targetYear": 2026,
+  "raceKey": "satsuki",
+  "weights": {
+    "popularityWeight": 1.20,
+    "ageWeight": null,
+    "frameWeight": 1.00,
+    "previousRaceWeight": 1.35
+  },
+  "scoring": {
+    "frameScores": [
+      { "minInclusive": 4, "maxInclusive": 7, "score": 0.35 },
+      { "minInclusive": 1, "maxInclusive": 3, "score": -0.15 },
+      { "minInclusive": 8, "maxInclusive": 8, "score": -0.10 }
+    ],
+    "ageScores": [
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.00 }
+    ],
+    "preferredRaceNameScores": {
+      "共同通信杯": 1.00,
+      "弥生賞": 0.85,
+      "弥生賞ディープインパクト記念": 0.85,
+      "ホープフルS": 0.80,
+      "ホープフルステークス": 0.80,
+      "スプリングS": 0.65,
+      "スプリングステークス": 0.65,
+      "京成杯": 0.60,
+      "毎日杯": 0.55
+    },
+    "lastFinishScores": [
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.00 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.90 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.70 },
+      { "minInclusive": 4, "maxInclusive": 5, "score": 0.45 },
+      { "minInclusive": 6, "maxInclusive": 9, "score": 0.10 },
+      { "minInclusive": 10, "maxInclusive": null, "score": -0.60 },
+      { "minInclusive": null, "maxInclusive": null, "score": -0.15 }
+    ],
+    "lastPopularityScores": [
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.00 },
+      { "minInclusive": 3, "maxInclusive": 3, "score": 0.95 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
+      { "minInclusive": 4, "maxInclusive": 4, "score": 0.55 },
+      { "minInclusive": 5, "maxInclusive": 5, "score": 0.35 },
+      { "minInclusive": 6, "maxInclusive": 8, "score": 0.04 },
+      { "minInclusive": 9, "maxInclusive": 10, "score": 0.10 },
+      { "minInclusive": 11, "maxInclusive": null, "score": -0.40 },
+      { "minInclusive": null, "maxInclusive": null, "score": 0.00 }
+    ]
+  }
+}

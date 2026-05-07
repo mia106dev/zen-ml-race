@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ZenMLRace.Lightweight.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "takamatsu \".\\Profiles\\profile-2026-takamatsu.json\""
+    }
+  }
+}

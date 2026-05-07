@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenMLRace.Worker", "ZenMLRa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenMLRace.API", "ZenMLRace.API\ZenMLRace.API.csproj", "{7FA7D126-234D-42FF-A9E3-3956B528CCCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenMLRace.Lightweight", "ZenMLRace.Lightweight\ZenMLRace.Lightweight.csproj", "{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{7FA7D126-234D-42FF-A9E3-3956B528CCCE}.Release|x64.Build.0 = Release|Any CPU
 		{7FA7D126-234D-42FF-A9E3-3956B528CCCE}.Release|x86.ActiveCfg = Release|Any CPU
 		{7FA7D126-234D-42FF-A9E3-3956B528CCCE}.Release|x86.Build.0 = Release|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Debug|x64.Build.0 = Debug|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Debug|x86.Build.0 = Debug|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Release|x64.ActiveCfg = Release|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Release|x64.Build.0 = Release|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Release|x86.ActiveCfg = Release|Any CPU
+		{7EBE3AE2-9AC5-40F6-803E-7B2A4CB1CF10}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

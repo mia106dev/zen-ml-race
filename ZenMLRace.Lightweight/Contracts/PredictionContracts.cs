@@ -1,10 +1,12 @@
 namespace ZenMLRace.Lightweight.Contracts;
 
+// TODO: be private
 public sealed record RaceSourceDocuments(
     string RaceKey,
     string RaceCardHtml,
     string DataHtml);
 
+// TODO: Coreのものと統合
 public sealed record HorseProfile(
     int FrameNumber,
     int HorseNumber,

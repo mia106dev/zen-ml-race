@@ -3,7 +3,7 @@ using ZenMLRace.Lightweight.Contracts;
 
 namespace ZenMLRace.Lightweight.Services;
 
-public class JraFetcher
+public class JraHtmlFetcher
 {
     private static readonly string baseUrl = "https://www.jra.go.jp/keiba/g1/";
     private readonly string raceKey;
@@ -14,7 +14,7 @@ public class JraFetcher
     private static readonly string userAgentHeader = "Zen-Lightweight/0.1 (+https://www.jra.go.jp/)";
 
     private readonly Encoding sjis;
-    public JraFetcher(string raceKey)
+    public JraHtmlFetcher(string raceKey)
     {
         this.raceKey = raceKey;
         raceCardUrl = $"{baseUrl}{raceKey}/syutsuba.html";

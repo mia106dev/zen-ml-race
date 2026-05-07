@@ -11,7 +11,7 @@ if (args.Length < 2)
 var raceKey = args[0];
 var profilePath = args[1];
 
-var fetcher = new JraFetcher(raceKey);
+var fetcher = new JraHtmlFetcher(raceKey);
 var documents = await fetcher.Fetch();
 
 var profileLoader = new JsonRacePredictionProfileLoader();

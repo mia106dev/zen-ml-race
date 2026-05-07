@@ -72,7 +72,7 @@ public interface IInsightNarrator
     string BuildNarrative(PredictionResult result);
 }
 
-public interface IPredictionEngine
+public interface IPredictior
 {
     PredictionResult Predict(PredictionRequest request);
 }

@@ -5,7 +5,7 @@ namespace ZenMLRace.Lightweight.Services;
 
 public sealed class JsonRacePredictionProfileLoader : IRacePredictionProfileLoader
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    private static readonly JsonSerializerOptions jsonOptions = new()
     {
         PropertyNameCaseInsensitive = true
     };
@@ -13,12 +13,8 @@ public sealed class JsonRacePredictionProfileLoader : IRacePredictionProfileLoad
     public RacePredictionProfile LoadFromFile(string profilePath)
     {
         var json = File.ReadAllText(profilePath);
-        var profile = JsonSerializer.Deserialize<RacePredictionProfile>(json, JsonOptions);
-
-        if (profile is null)
-        {
-            throw new InvalidOperationException($"プロフィールのJSONを読み込めませんでした: {profilePath}");
-        }
+        var profile = JsonSerializer.Deserialize<RacePredictionProfile>(json, jsonOptions)
+            ?? throw new InvalidOperationException($"プロフィールのJSONを読み込めませんでした: {profilePath}");
 
         Validate(profile, profilePath);
         return profile;

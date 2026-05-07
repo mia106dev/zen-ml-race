@@ -6,7 +6,7 @@ namespace ZenMLRace.Lightweight.Services;
 public sealed class LightweightPredictionEngine(
     IHtmlRaceNormalizer normalizer,
     IHorseScorer horseScorer,
-    IInsightNarrator narrator) : IPredictionEngine
+    IInsightNarrator narrator) : IPredictior
 {
     public PredictionResult Predict(PredictionRequest request)
     {
@@ -45,8 +45,5 @@ public sealed class LightweightPredictionEngine(
         return sb.ToString().TrimEnd();
     }
 
-    private static string DescribeWeight(double? value)
-    {
-        return value.HasValue ? value.Value.ToString("0.##") : "none (neutral=1.0)";
-    }
+    private static string DescribeWeight(double? value) => value.HasValue ? value.Value.ToString("0.##") : "none (neutral=1.0)";
 }

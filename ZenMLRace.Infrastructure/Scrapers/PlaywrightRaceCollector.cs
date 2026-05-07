@@ -14,6 +14,7 @@ public class PlaywrightRaceCollector : IRaceCollector
         {
             Id = raceId,
             RaceName = "Test Race",
+            RaceTrack = "Unknown",
             RaceDate = DateTime.Now
         };
     }

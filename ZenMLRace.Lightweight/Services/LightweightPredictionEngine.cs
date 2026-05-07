@@ -6,7 +6,7 @@ namespace ZenMLRace.Lightweight.Services;
 public sealed class LightweightPredictionEngine(
     IHtmlRaceNormalizer normalizer,
     IHorseScorer horseScorer,
-    IInsightNarrator narrator) : IPredictior
+    IInsightNarrator narrator) : IPredictor
 {
     public PredictionResult Predict(PredictionRequest request)
     {
@@ -41,7 +41,6 @@ public sealed class LightweightPredictionEngine(
         sb.AppendLine($"AgeWeight: {DescribeWeight(weights.AgeWeight)}");
         sb.AppendLine($"FrameWeight: {DescribeWeight(weights.FrameWeight)}");
         sb.AppendLine($"PreviousRaceWeight: {DescribeWeight(weights.PreviousRaceWeight)}");
-        sb.AppendLine($"WinnerProfileWeight: {DescribeWeight(weights.WinnerProfileWeight)}");
         return sb.ToString().TrimEnd();
     }
 

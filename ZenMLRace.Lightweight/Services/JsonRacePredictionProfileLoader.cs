@@ -36,14 +36,13 @@ public sealed class JsonRacePredictionProfileLoader : IRacePredictionProfileLoad
         ValidateWeight(profile.Weights.AgeWeight, nameof(profile.Weights.AgeWeight), profilePath);
         ValidateWeight(profile.Weights.FrameWeight, nameof(profile.Weights.FrameWeight), profilePath);
         ValidateWeight(profile.Weights.PreviousRaceWeight, nameof(profile.Weights.PreviousRaceWeight), profilePath);
-        ValidateWeight(profile.Weights.WinnerProfileWeight, nameof(profile.Weights.WinnerProfileWeight), profilePath);
     }
 
     private static void ValidateWeight(double? weight, string fieldName, string profilePath)
     {
-        if (weight.HasValue && weight.Value <= 0)
+        if (weight.HasValue && weight.Value < 0)
         {
-            throw new InvalidOperationException($"{fieldName} は正の値を指定するか null を使用してください: {profilePath}");
+            throw new InvalidOperationException($"{fieldName} は0以上の値を指定するか null を使用してください: {profilePath}");
         }
     }
 }

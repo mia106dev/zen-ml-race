@@ -4,6 +4,9 @@ namespace ZenMLRace.Lightweight.Services;
 
 public sealed class RuleBasedHorseScorer : IHorseScorer
 {
+    private const double ScoreMin = -1.0;
+    private const double ScoreMax = 1.0;
+
     public IReadOnlyList<HorseScore> Score(NormalizedRaceData normalizedData, WeightProfile weights, ScoringProfile scoringProfile)
     {
         var scores = new List<HorseScore>(normalizedData.Horses.Count);
@@ -17,7 +20,7 @@ public sealed class RuleBasedHorseScorer : IHorseScorer
             score += AddScore(
                 reasons,
                 "枠番評価",
-                ScoreByBands(horse.FrameNumber, scoringProfile.FrameScores),
+                NormalizeScore(ScoreByBands(horse.FrameNumber, scoringProfile.FrameScores)),
                 resolvedWeights.FrameWeight,
                 weights.FrameWeight);
 
@@ -26,27 +29,32 @@ public sealed class RuleBasedHorseScorer : IHorseScorer
                 score += AddScore(
                     reasons,
                     "年齢評価",
-                    ScoreByBands(horse.Age.Value, scoringProfile.AgeScores),
+                    NormalizeScore(ScoreByBands(horse.Age.Value, scoringProfile.AgeScores)),
                     resolvedWeights.AgeWeight,
                     weights.AgeWeight);
             }
 
+            var previousRaceRaw = 0.0;
+            var hasPreviousRaceSignal = false;
+
             if (!string.IsNullOrWhiteSpace(horse.LastRaceCategory))
             {
-                score += AddScore(
-                    reasons,
-                    "前走カテゴリ評価",
-                    ScoreLastRaceCategory(horse.LastRaceCategory, scoringProfile.LastRaceCategoryScores),
-                    resolvedWeights.PreviousRaceWeight,
-                    weights.PreviousRaceWeight);
+                previousRaceRaw += NormalizeScore(ScoreLastRaceCategory(horse.LastRaceCategory, scoringProfile.LastRaceCategoryScores));
+                hasPreviousRaceSignal = true;
             }
 
             if (horse.LastRaceFinishPosition.HasValue)
             {
+                previousRaceRaw += NormalizeScore(ScoreByBands(horse.LastRaceFinishPosition.Value, scoringProfile.LastFinishScores));
+                hasPreviousRaceSignal = true;
+            }
+
+            if (hasPreviousRaceSignal)
+            {
                 score += AddScore(
                     reasons,
-                    "前走着順評価",
-                    ScoreByBands(horse.LastRaceFinishPosition.Value, scoringProfile.LastFinishScores),
+                    "前走総合評価",
+                    previousRaceRaw,
                     resolvedWeights.PreviousRaceWeight,
                     weights.PreviousRaceWeight);
             }
@@ -56,12 +64,10 @@ public sealed class RuleBasedHorseScorer : IHorseScorer
                 score += AddScore(
                     reasons,
                     "人気評価",
-                    ScoreByBands(horse.LastRacePopularity.Value, scoringProfile.LastPopularityScores),
+                    NormalizeScore(ScoreByBands(horse.LastRacePopularity.Value, scoringProfile.LastPopularityScores)),
                     resolvedWeights.PopularityWeight,
                     weights.PopularityWeight);
             }
-
-            reasons.Add($"優勝馬傾向重み w={FormatWeight(weights.WinnerProfileWeight)} (将来拡張用)");
 
             scores.Add(new HorseScore(horse.Name, horse.HorseNumber, Math.Round(score, 2), reasons));
         }
@@ -85,6 +91,8 @@ public sealed class RuleBasedHorseScorer : IHorseScorer
         reasons.Add($"{label} {weighted:+0.00;-0.00} (w={FormatWeight(rawWeight)})");
         return weighted;
     }
+
+    private static double NormalizeScore(double rawScore) => Math.Clamp(rawScore, ScoreMin, ScoreMax);
 
     private static double ScoreByBands(int value, IReadOnlyList<NumericBandScore> bands)
     {

@@ -6,8 +6,7 @@
     "popularityWeight": 1.05,
     "ageWeight": null,
     "frameWeight": 1.22,
-    "previousRaceWeight": 1.28,
-    "winnerProfileWeight": 1.10
+    "previousRaceWeight": 1.28
   },
   "scoring": {
     "frameScores": [

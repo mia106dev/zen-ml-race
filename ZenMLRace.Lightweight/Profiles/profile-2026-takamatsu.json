@@ -6,8 +6,7 @@
     "popularityWeight": null,
     "ageWeight": null,
     "frameWeight": 1.05,
-    "previousRaceWeight": 1.20,
-    "winnerProfileWeight": null
+    "previousRaceWeight": 1.20
   },
   "scoring": {
     "frameScores": [
@@ -16,18 +15,18 @@
       { "minInclusive": 1, "maxInclusive": 2, "score": -0.20 }
     ],
     "ageScores": [
-      { "minInclusive": 4, "maxInclusive": 6, "score": 1.20 },
+      { "minInclusive": 4, "maxInclusive": 6, "score": 1.00 },
       { "minInclusive": 7, "maxInclusive": 7, "score": -0.60 },
       { "minInclusive": 8, "maxInclusive": null, "score": -0.90 }
     ],
     "lastRaceCategoryScores": {
-      "Overseas": 1.20,
+      "Overseas": 1.00,
       "SilkRoad": 0.70,
       "Ocean": 0.25,
       "Hankyu": 0.20
     },
     "lastFinishScores": [
-      { "minInclusive": 1, "maxInclusive": 1, "score": 1.20 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 1.00 },
       { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
       { "minInclusive": 3, "maxInclusive": 3, "score": 0.60 },
       { "minInclusive": 4, "maxInclusive": 5, "score": 0.35 },

@@ -28,20 +28,6 @@ public sealed record NormalizedRaceData(
     string RaceCardMarkdown,
     string DataMarkdown);
 
-public sealed record WeightProfile(
-    double? PopularityWeight,
-    double? AgeWeight,
-    double? FrameWeight,
-    double? PreviousRaceWeight,
-    double? WinnerProfileWeight);
-
-public sealed record RacePredictionProfile(
-    string ProfileVersion,
-    int TargetYear,
-    string RaceKey,
-    WeightProfile Weights,
-    ScoringProfile Scoring);
-
 public sealed record PredictionRequest(
     RaceSourceDocuments Source,
     RacePredictionProfile Profile);
@@ -74,7 +60,7 @@ public interface IInsightNarrator
     string BuildNarrative(PredictionResult result);
 }
 
-public interface IPredictior
+public interface IPredictor
 {
     PredictionResult Predict(PredictionRequest request);
 }

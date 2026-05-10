@@ -2,7 +2,7 @@
   "profiles": {
     "ZenMLRace.Lightweight.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "takamatsu \"C:\\Users\\multi\\source\\repos\\zen-ml-race\\Profiles\" pop-suppressed"
+      "commandLineArgs": "nmc \"C:\\Users\\multi\\source\\repos\\zen-ml-race\\Profiles\""
     }
   }
 }

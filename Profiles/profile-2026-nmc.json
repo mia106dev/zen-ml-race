@@ -3,10 +3,10 @@
   "targetYear": 2026,
   "raceKey": "nmc",
   "weights": {
-    "popularityWeight": 0.95,
+    "popularityWeight": 0.85,
     "ageWeight": null,
     "frameWeight": 1.20,
-    "previousRaceWeight": 1.35
+    "previousRaceWeight": 1.15
   },
   "scoring": {
     "frameScores": [
@@ -37,13 +37,13 @@
       { "minInclusive": 2, "maxInclusive": 2, "score": 1.00 },
       { "minInclusive": 3, "maxInclusive": 3, "score": 0.90 },
       { "minInclusive": 4, "maxInclusive": 5, "score": 0.72 },
-      { "minInclusive": 1, "maxInclusive": 1, "score": 0.15 },
+      { "minInclusive": 1, "maxInclusive": 1, "score": 0.85 },
       { "minInclusive": 6, "maxInclusive": 9, "score": 0.10 },
       { "minInclusive": 10, "maxInclusive": null, "score": -0.45 },
       { "minInclusive": null, "maxInclusive": null, "score": -0.10 }
     ],
     "lastPopularityScores": [
-      { "minInclusive": 2, "maxInclusive": 2, "score": 0.85 },
+      { "minInclusive": 2, "maxInclusive": 2, "score": 0.45 },
       { "minInclusive": 1, "maxInclusive": 1, "score": 0.45 },
       { "minInclusive": 3, "maxInclusive": 3, "score": 0.30 },
       { "minInclusive": 4, "maxInclusive": 4, "score": 0.10 },

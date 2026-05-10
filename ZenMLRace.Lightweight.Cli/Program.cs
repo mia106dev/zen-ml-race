@@ -13,7 +13,7 @@ if (args.Length < 2)
 
 var raceKey = args[0];
 var profilePath = $"{args[1]}\\profile-2026-{raceKey}.json";
-const int TopN = 5;
+const int TopN = 10;
 var scorerKey = args.Length >= 3 ? args[2] : "standard";
 
 var fetcher = new JraHtmlFetcher(raceKey);

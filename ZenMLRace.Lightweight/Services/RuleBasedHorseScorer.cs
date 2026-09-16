@@ -101,6 +101,7 @@ public sealed class RuleBasedHorseScorer : IHorseScorer
             if (hasPreviousRaceSignal && previousRaceDecayTotal > 0)
             {
                 previousRaceRaw /= previousRaceDecayTotal;
+                previousRaceRaw = NormalizeScore(previousRaceRaw);
             }
 
             if (hasPopularitySignal && popularityDecayTotal > 0)
